@@ -9,6 +9,7 @@ I'm running this with Ubuntu 22.04.1 on a Dell Optiplex 9020 (2013), Intel(R) Co
 ## Getting the snapshot:
 
 Read: https://docs.openalex.org/download-all-data/download-to-your-machine    
+
 Install AWS client
 ````
 sudo apt install awscli
