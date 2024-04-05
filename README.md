@@ -101,6 +101,8 @@ FROM read_ndjson(
     alternate_titles: 'VARCHAR',
     country_code: 'VARCHAR',
     type: 'VARCHAR',
+    works_count: 'BIGINT',
+    cited_by_count: 'BIGINT',
     homepage_url: 'VARCHAR',
     ids: 'STRUCT(openalex VARCHAR, ror VARCHAR, mag VARCHAR, wikidata VARCHAR, grid VARCHAR)',
     updated_date: 'DATE',
@@ -109,6 +111,15 @@ FROM read_ndjson(
   },
   compression='gzip'
 );
+````
+A test search, show 100 Swedish institutions and all available columns, ordered by number of works
+
+````
+SELECT *
+FROM institutions
+WHERE country_code = 'SE'
+ORDER BY works_count DESC
+LIMIT 100;
 ````
 
 Checking the size of funders = 32K+
@@ -151,7 +162,7 @@ FROM read_ndjson(
 );
 ````
 
-A test search, show 100 Swedish funders and all available columns, ordered by number of grants 
+A test search, showing 100 Swedish funders and all available columns, ordered by number of grants 
 
 ````
 SELECT *
