@@ -102,7 +102,7 @@ FROM read_ndjson(
     country_code: 'VARCHAR',
     type: 'VARCHAR',
     homepage_url: 'VARCHAR',
-    ids: 'STRUCT(openalex VARCHAR, ror VARCHAR, mag VARCHAR, wikidata VARCHAR, grid VARCHAR',
+    ids: 'STRUCT(openalex VARCHAR, ror VARCHAR, mag VARCHAR, wikidata VARCHAR, grid VARCHAR)',
     updated_date: 'DATE',
     created_date: 'DATE',
     updated: 'VARCHAR'
