@@ -96,7 +96,7 @@ from read_ndjson(
 
 ````
 
-Create a table for funders
+Create a table for funders (not yet exhaustive)
 
 ````
 CREATE TABLE funders AS
