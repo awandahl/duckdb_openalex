@@ -7,7 +7,7 @@ Open a new db
 ./duckdb open_alex_test.duckdb
 ````
 
-Checking the size of authors
+Checking the size of authors = 90M+
 
 ````
 select count(*)
@@ -49,7 +49,7 @@ FROM read_ndjson(
   compression='gzip'
 );
 ````
-A few searches
+A test search, find 100 authors affiliated to KTH and create a column orcid_modified for ORCiD without the "https://orcid.org/"
 
 ````
 SELECT *, REPLACE(orcid, 'https://orcid.org/', '') AS orcid_modified
@@ -57,6 +57,8 @@ FROM authors
 WHERE last_known_institution.id = 'https://openalex.org/I86987016'
 LIMIT 100;
 ````
+
+Write a parquet file for the same search
 
 ````
 
