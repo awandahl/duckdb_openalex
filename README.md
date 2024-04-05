@@ -5,7 +5,7 @@ Open a new db
 
 ````
 ./duckdb open_alex_test.duckdb
-
+````
 
 Checking the size of authors
 
@@ -49,7 +49,7 @@ FROM read_ndjson(
   compression='gzip'
 );
 ````
-
+A few searches
 
 ````
 SELECT *, REPLACE(orcid, 'https://orcid.org/', '') AS orcid_modified
