@@ -1,6 +1,11 @@
 # duckdb_openalex
 Playing around with DuckDB and OpenAlex
 
+Open a new db
+
+````
+./duckdb open_alex_test.duckdb
+
 
 Checking the size of authors
 
@@ -45,10 +50,14 @@ FROM read_ndjson(
 );
 ````
 
+
+````
 SELECT *, REPLACE(orcid, 'https://orcid.org/', '') AS orcid_modified
 FROM authors
 WHERE last_known_institution.id = 'https://openalex.org/I86987016'
 LIMIT 100;
+````
+
 ````
 
 COPY (
@@ -58,4 +67,13 @@ COPY (
     LIMIT 100
 ) TO '/home/aw/oal/kth_authors_oal_2024-04-05.parquet' (FORMAT 'parquet');
 
+````
+
+Checking the size of funders
+
+````
+select count(*)
+from read_ndjson(
+  '/home/aw/oal/openalex-snapshot/data/funders/*/*.gz'
+);
 ````
