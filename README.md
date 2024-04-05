@@ -48,7 +48,7 @@ from read_ndjson(
 └──────────────┘
 ````
 
-### Create a table for the authors (thanks Chris)
+### Create a table for the authors
 
 ````
 
