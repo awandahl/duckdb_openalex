@@ -3,7 +3,7 @@
 Playing around with DuckDB and OpenAlex. Much easier than I thought!    
 Big thanks to https://github.com/chrisgebert/open_alex_snapshot
 
-Running this with Ubuntu 22.04.1 on a Dell Optiplex 9020 (2013), Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz, 24 GB RAM
+I'm running this with Ubuntu 22.04.1 on a Dell Optiplex 9020 (2013), Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz, 24 GB RAM
 
 
 ## Getting the snapshot:
