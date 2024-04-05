@@ -117,3 +117,12 @@ FROM read_ndjson(
   },
   compression='gzip'
 );
+````
+
+A test search, show 100 funders and all available columns
+
+````
+SELECT *
+FROM funders
+LIMIT 100;
+````
