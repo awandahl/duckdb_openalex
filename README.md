@@ -200,3 +200,6 @@ WHERE country_code = 'SE'
 ORDER BY grants_count DESC
 LIMIT 100;
 ````
+
+
+https://www.christophenicault.com/post/large_dataframe_arrow_duckdb/
