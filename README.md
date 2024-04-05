@@ -1,6 +1,9 @@
 # duckdb_openalex
 Playing around with DuckDB and OpenAlex
 
+
+Checking the size of authors
+
 ````
 select count(*)
 from read_ndjson(
@@ -13,7 +16,11 @@ from read_ndjson(
 ├──────────────┤
 │     90556187 │
 └──────────────┘
+````
 
+Create a table for the authors
+
+````
 
 CREATE TABLE authors AS
 SELECT *
@@ -36,12 +43,13 @@ FROM read_ndjson(
   },
   compression='gzip'
 );
-
+````
 
 SELECT *, REPLACE(orcid, 'https://orcid.org/', '') AS orcid_modified
 FROM authors
 WHERE last_known_institution.id = 'https://openalex.org/I86987016'
 LIMIT 100;
+````
 
 COPY (
     SELECT *, REPLACE(orcid, 'https://orcid.org/', '') AS orcid_modified
