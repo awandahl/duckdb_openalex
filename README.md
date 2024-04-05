@@ -38,7 +38,7 @@ from read_ndjson(
 └──────────────┘
 ````
 
-## Create a table for the authors
+## Create a table for the authors (thanks Chris)
 
 ````
 
@@ -73,7 +73,7 @@ WHERE last_known_institution.id = 'https://openalex.org/I86987016'
 LIMIT 100;
 ````
 
-Write a parquet file for the same search
+## Write a parquet file for the same search
 
 ````
 
