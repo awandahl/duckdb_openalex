@@ -39,7 +39,8 @@ select count(*)
 from read_ndjson(
   '/home/aw/oal/openalex-snapshot/data/authors/*/*.gz'
 );
-
+````
+````
 ┌──────────────┐
 │ count_star() │
 │    int64     │
@@ -104,6 +105,14 @@ from read_ndjson(
   '/home/aw/oal/openalex-snapshot/data/institutions/*/*.gz'
 );
 ````
+````
+┌──────────────┐
+│ count_star() │
+│    int64     │
+├──────────────┤
+│       107716 │
+└──────────────┘
+````
 
 ### Create a table for institutions (not yet exhaustive)
 
@@ -146,7 +155,8 @@ select count(*)
 from read_ndjson(
   '/home/aw/oal/openalex-snapshot/data/funders/*/*.gz'
 );
-
+````
+````
 ┌──────────────┐
 │ count_star() │
 │    int64     │
