@@ -5,7 +5,6 @@ Playing around with DuckDB and OpenAlex. Much easier than I thought!
 
 I'm running this with Ubuntu 22.04.1 on a Dell Optiplex 9020 (2013), Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz, 24 GB RAM
 
-
 ### Getting the snapshot:
 
 Read: https://docs.openalex.org/download-all-data/download-to-your-machine    
@@ -22,6 +21,7 @@ aws s3 sync "s3://openalex" "openalex-snapshot" --no-sign-request
 
 
 ### Open a new db
+
 First get the DuckDB binary:  
 ````
 wget https://github.com/duckdb/duckdb/releases/download/v0.10.1/duckdb_cli-linux-amd64.zip
@@ -75,6 +75,7 @@ FROM read_ndjson(
   compression='gzip'
 );
 ````
+
 ### A test search, find 100 authors affiliated to KTH and create an additional column 'orcid_modified' for ORCiD where the number isn't prepended by 'https://orcid.org/'
 
 ````
@@ -138,6 +139,7 @@ FROM read_ndjson(
   compression='gzip'
 );
 ````
+
 ### A test search, show 100 Swedish institutions and all available columns, ordered by number of works
 
 ````
