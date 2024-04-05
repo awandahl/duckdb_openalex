@@ -77,3 +77,25 @@ from read_ndjson(
   '/home/aw/oal/openalex-snapshot/data/funders/*/*.gz'
 );
 ````
+
+Create a table for funders
+
+````
+CREATE TABLE funders AS
+SELECT *
+FROM read_ndjson(
+'/home/aw/oal/openalex-snapshot/data/funders/*/*.gz', columns = {
+    id: 'VARCHAR',
+    display_name: 'VARCHAR',
+    alternate_titles: 'VARCHAR',
+    country_code: 'VARCHAR',
+    grants_count: 'BIGINT',
+	  works_count: 'BIGINT',
+    cited_by_count: 'BIGINT',
+	  ids: 'STRUCT(openalex VARCHAR, ror VARCHAR, wikidata VARCHAR, crossref VARCHAR, doi VARCHAR)',
+    updated_date: 'DATE',
+    created_date: 'DATE',
+    updated: 'VARCHAR'
+  },
+  compression='gzip'
+);
