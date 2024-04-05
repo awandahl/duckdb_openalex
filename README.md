@@ -64,7 +64,7 @@ FROM read_ndjson(
   compression='gzip'
 );
 ````
-## A test search, find 100 authors affiliated to KTH and create a column 'orcid_modified' for ORCiD where the number isn't prepended by 'https://orcid.org/'
+## A test search, find 100 authors affiliated to KTH and create an additional column 'orcid_modified' for ORCiD where the number isn't prepended by 'https://orcid.org/'
 
 ````
 SELECT *, REPLACE(orcid, 'https://orcid.org/', '') AS orcid_modified
