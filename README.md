@@ -79,6 +79,38 @@ COPY (
 
 ````
 
+Checking the size of institutions = 100K+
+
+````
+select count(*)
+from read_ndjson(
+  '/home/aw/oal/openalex-snapshot/data/institutions/*/*.gz'
+);
+````
+
+Create a table for institutions (not yet exhaustive)
+
+````
+
+CREATE TABLE institutions AS
+SELECT *
+FROM read_ndjson(
+'/home/aw/oal/openalex-snapshot/data/institutions/*/*.gz', columns = {
+    id: 'VARCHAR',
+    display_name: 'VARCHAR',
+    alternate_titles: 'VARCHAR',
+    country_code: 'VARCHAR',
+    type: 'VARCHAR',
+    homepage_url: 'VARCHAR',
+    ids: 'STRUCT(openalex VARCHAR, ror VARCHAR, mag VARCHAR, wikidata VARCHAR, grid VARCHAR',
+    updated_date: 'DATE',
+    created_date: 'DATE',
+    updated: 'VARCHAR'
+  },
+  compression='gzip'
+);
+````
+
 Checking the size of funders = 32K+
 
 ````
