@@ -1,7 +1,7 @@
 # duckdb_openalex
 Playing around with DuckDB and OpenAlex
 
-
+````
 select count(*)
 from read_ndjson(
   '/home/aw/oal/openalex-snapshot/data/authors/*/*.gz'
@@ -50,3 +50,4 @@ COPY (
     LIMIT 100
 ) TO '/home/aw/oal/kth_authors_oal_2024-04-05.parquet' (FORMAT 'parquet');
 
+````
