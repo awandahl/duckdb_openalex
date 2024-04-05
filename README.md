@@ -8,7 +8,11 @@ Running this with Ubuntu 22.04.1 on a Dell Optiplex 9020 (2013), Intel(R) Core(T
 
 ## Getting the snapshot:
 
-https://docs.openalex.org/download-all-data/download-to-your-machine    
+Read: https://docs.openalex.org/download-all-data/download-to-your-machine 
+Install AWS client
+````
+sudo apt install awscli
+````
 About 300Gb which takes approximately three hours to download.
 
 ````
