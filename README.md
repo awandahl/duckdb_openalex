@@ -119,10 +119,12 @@ FROM read_ndjson(
 );
 ````
 
-A test search, show 100 funders and all available columns
+A test search, show 100 Swedish funders and all available columns, ordered by number of grants 
 
 ````
 SELECT *
 FROM funders
+WHERE country_code = 'SE'
+ORDER BY grants_count DESC
 LIMIT 100;
 ````
