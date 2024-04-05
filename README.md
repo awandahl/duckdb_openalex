@@ -90,9 +90,9 @@ FROM read_ndjson(
     alternate_titles: 'VARCHAR',
     country_code: 'VARCHAR',
     grants_count: 'BIGINT',
-	  works_count: 'BIGINT',
+    works_count: 'BIGINT',
     cited_by_count: 'BIGINT',
-	  ids: 'STRUCT(openalex VARCHAR, ror VARCHAR, wikidata VARCHAR, crossref VARCHAR, doi VARCHAR)',
+    ids: 'STRUCT(openalex VARCHAR, ror VARCHAR, wikidata VARCHAR, crossref VARCHAR, doi VARCHAR)',
     updated_date: 'DATE',
     created_date: 'DATE',
     updated: 'VARCHAR'
