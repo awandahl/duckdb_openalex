@@ -2,6 +2,8 @@
 Playing around with DuckDB and OpenAlex. Much easier than I thought!    
 Big thanks to https://github.com/chrisgebert/open_alex_snapshot
 
+Running this with Ubuntu 22.04.1 on a Dell Optiplex 9020 (2013), Intel Gen4 i3 and 24 Gb RAM  
+
 https://docs.openalex.org/download-all-data/download-to-your-machine    
 About 300Gb which takes approximately three hours to download.
 
