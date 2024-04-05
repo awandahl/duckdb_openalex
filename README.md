@@ -1,6 +1,14 @@
 # duckdb_openalex
 Playing around with DuckDB and OpenAlex
 
+https://docs.openalex.org/download-all-data/download-to-your-machine
+About 300Gb which takes approximately 3 hours to download.
+
+````
+aws s3 sync "s3://openalex" "openalex-snapshot" --no-sign-request
+````
+
+
 Open a new db
 
 ````
