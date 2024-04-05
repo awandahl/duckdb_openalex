@@ -6,7 +6,7 @@ Big thanks to https://github.com/chrisgebert/open_alex_snapshot
 I'm running this with Ubuntu 22.04.1 on a Dell Optiplex 9020 (2013), Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz, 24 GB RAM
 
 
-## Getting the snapshot:
+### Getting the snapshot:
 
 Read: https://docs.openalex.org/download-all-data/download-to-your-machine    
 
@@ -21,7 +21,7 @@ aws s3 sync "s3://openalex" "openalex-snapshot" --no-sign-request
 ````
 
 
-## Open a new db
+### Open a new db
 First get the DuckDB binary:  
 ````
 wget https://github.com/duckdb/duckdb/releases/download/v0.10.1/duckdb_cli-linux-amd64.zip
@@ -32,7 +32,7 @@ then
 ./duckdb open_alex_test.duckdb
 ````
 
-## Checking the size of authors = 90M+
+### Checking the size of authors = 90M+
 
 ````
 select count(*)
@@ -48,7 +48,7 @@ from read_ndjson(
 └──────────────┘
 ````
 
-## Create a table for the authors (thanks Chris)
+### Create a table for the authors (thanks Chris)
 
 ````
 
@@ -74,7 +74,7 @@ FROM read_ndjson(
   compression='gzip'
 );
 ````
-## A test search, find 100 authors affiliated to KTH and create an additional column 'orcid_modified' for ORCiD where the number isn't prepended by 'https://orcid.org/'
+### A test search, find 100 authors affiliated to KTH and create an additional column 'orcid_modified' for ORCiD where the number isn't prepended by 'https://orcid.org/'
 
 ````
 SELECT *, REPLACE(orcid, 'https://orcid.org/', '') AS orcid_modified
@@ -83,7 +83,7 @@ WHERE last_known_institution.id = 'https://openalex.org/I86987016'
 LIMIT 100;
 ````
 
-## Write a parquet file for the same search
+### Write a parquet file for the same search
 
 ````
 
@@ -96,7 +96,7 @@ COPY (
 
 ````
 
-## Checking the size of institutions = 100K+
+### Checking the size of institutions = 100K+
 
 ````
 select count(*)
@@ -105,7 +105,7 @@ from read_ndjson(
 );
 ````
 
-## Create a table for institutions (not yet exhaustive)
+### Create a table for institutions (not yet exhaustive)
 
 ````
 
@@ -129,7 +129,7 @@ FROM read_ndjson(
   compression='gzip'
 );
 ````
-## A test search, show 100 Swedish institutions and all available columns, ordered by number of works
+### A test search, show 100 Swedish institutions and all available columns, ordered by number of works
 
 ````
 SELECT *
@@ -139,7 +139,7 @@ ORDER BY works_count DESC
 LIMIT 100;
 ````
 
-## Checking the size of funders = 32K+
+### Checking the size of funders = 32K+
 
 ````
 select count(*)
@@ -156,7 +156,7 @@ from read_ndjson(
 
 ````
 
-## Create a table for funders (not yet exhaustive)
+### Create a table for funders (not yet exhaustive)
 
 ````
 CREATE TABLE funders AS
@@ -179,7 +179,7 @@ FROM read_ndjson(
 );
 ````
 
-## A test search, showing 100 Swedish funders and all available columns, ordered by number of grants 
+### A test search, showing 100 Swedish funders and all available columns, ordered by number of grants 
 
 ````
 SELECT *
