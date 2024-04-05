@@ -1,5 +1,6 @@
 # duckdb_openalex
-Playing around with DuckDB and OpenAlex
+Playing around with DuckDB and OpenAlex. Much easier than I thought!    
+Big thanks to https://github.com/chrisgebert/open_alex_snapshot
 
 https://docs.openalex.org/download-all-data/download-to-your-machine    
 About 300Gb which takes approximately three hours to download.
