@@ -17,7 +17,7 @@ aws s3 sync "s3://openalex" "openalex-snapshot" --no-sign-request
 
 
 ## Open a new db
-First get the duckdb binary:  
+First get the DuckDB binary:  
 ````
 wget https://github.com/duckdb/duckdb/releases/download/v0.10.1/duckdb_cli-linux-amd64.zip
 ````
