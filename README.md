@@ -201,5 +201,91 @@ ORDER BY grants_count DESC
 LIMIT 100;
 ````
 
+````
+CREATE TABLE openalex_works AS
+SELECT *
+FROM read_ndjson(
+  '/path/to/openalex-snapshot/data/works/*.gz',
+  columns = {
+    id VARCHAR,
+    doi VARCHAR,
+    title VARCHAR,
+    display_name VARCHAR,
+    publication_year INT,
+    publication_date DATE,
+    ids STRUCT<openalex: VARCHAR, doi: VARCHAR>,
+    language VARCHAR,
+    primary_location STRUCT<
+      is_oa BOOLEAN,
+      landing_page_url VARCHAR,
+      pdf_url VARCHAR,
+      source STRUCT<
+        id VARCHAR,
+        display_name VARCHAR,
+        issn_l VARCHAR,
+        issn VARCHAR[],
+        is_oa BOOLEAN,
+        is_in_doaj BOOLEAN,
+        host_organization VARCHAR,
+        host_organization_name VARCHAR,
+        host_organization_lineage VARCHAR[],
+        type VARCHAR
+      >,
+      license VARCHAR,
+      version VARCHAR,
+      is_accepted BOOLEAN,
+      is_published BOOLEAN
+    >,
+    type VARCHAR,
+    type_crossref VARCHAR,
+    indexed_in VARCHAR[],
+    open_access STRUCT<is_oa BOOLEAN, oa_status VARCHAR, oa_url VARCHAR, any_repository_has_fulltext BOOLEAN>,
+    authorships ARRAY<STRUCT<
+      author_position VARCHAR,
+      author STRUCT<id VARCHAR, display_name VARCHAR, orcid VARCHAR>,
+      institutions ARRAY<STRUCT<id VARCHAR, display_name VARCHAR, ror VARCHAR, country_code VARCHAR, type VARCHAR, lineage VARCHAR[]>>,
+      countries VARCHAR[],
+      is_corresponding BOOLEAN,
+      raw_author_name VARCHAR,
+      raw_affiliation_string VARCHAR,
+      raw_affiliation_strings VARCHAR[]
+    >>,
+    countries_distinct_count INT,
+    institutions_distinct_count INT,
+    corresponding_author_ids VARCHAR[],
+    corresponding_institution_ids VARCHAR[],
+    apc_list STRUCT<value INT, currency VARCHAR, value_usd INT, provenance VARCHAR>,
+    apc_paid STRUCT<value INT, currency VARCHAR, value_usd INT, provenance VARCHAR>,
+    has_fulltext BOOLEAN,
+    cited_by_count INT,
+    cited_by_percentile_year STRUCT<min INT, max INT>,
+    biblio STRUCT<volume VARCHAR, issue VARCHAR, first_page VARCHAR, last_page VARCHAR>,
+    is_retracted BOOLEAN,
+    is_paratext BOOLEAN,
+    primary_topic STRUCT<id VARCHAR, display_name VARCHAR, score FLOAT, subfield STRUCT<id VARCHAR, display_name VARCHAR>, field STRUCT<id VARCHAR, display_name VARCHAR>, domain STRUCT<id VARCHAR, display_name VARCHAR>>,
+    topics ARRAY<STRUCT<id VARCHAR, display_name VARCHAR, score FLOAT, subfield STRUCT<id VARCHAR, display_name VARCHAR>, field STRUCT<id VARCHAR, display_name VARCHAR>, domain STRUCT<id VARCHAR, display_name VARCHAR>>>,
+    keywords VARCHAR[],
+    concepts ARRAY<STRUCT<id VARCHAR, wikidata VARCHAR, display_name VARCHAR, level INT, score FLOAT>>,
+    mesh VARCHAR[],
+    locations_count INT,
+    locations ARRAY<STRUCT<is_oa BOOLEAN, landing_page_url VARCHAR, pdf_url VARCHAR, source STRUCT<id VARCHAR, display_name VARCHAR, issn_l VARCHAR, issn VARCHAR[], is_oa BOOLEAN, is_in_doaj BOOLEAN, host_organization VARCHAR, host_organization_name VARCHAR, host_organization_lineage VARCHAR[], type VARCHAR>, license VARCHAR, version VARCHAR, is_accepted BOOLEAN, is_published BOOLEAN>>,
+    best_oa_location VARCHAR,
+    sustainable_development_goals ARRAY<STRUCT<score FLOAT, display_name VARCHAR, id VARCHAR>>,
+    grants VARCHAR[],
+    datasets VARCHAR[],
+    versions VARCHAR[],
+    referenced_works_count INT,
+    referenced_works VARCHAR[],
+    related_works VARCHAR[],
+    ngrams_url VARCHAR,
+    abstract_inverted_index STRUCT<terms: MAP<VARCHAR, ARRAY<INT>>>,
+    cited_by_api_url VARCHAR,
+    counts_by_year ARRAY<STRUCT<year INT, cited_by_count INT>>,
+    updated_date DATE,
+    created_date DATE
+  },
+  compression='gzip'
+);
+````
 
 https://www.christophenicault.com/post/large_dataframe_arrow_duckdb/
