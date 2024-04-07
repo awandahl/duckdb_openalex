@@ -205,7 +205,7 @@ LIMIT 100;
 CREATE TABLE works AS
 SELECT *
 FROM read_ndjson(
-  '/home/aw/oal/openalex-snapshot/data/works/*.gz',
+  '/home/aw/oal/openalex-snapshot/data/works/*/*.gz',
   columns = {
     id: 'VARCHAR',
     doi: 'VARCHAR',
@@ -215,7 +215,7 @@ FROM read_ndjson(
     publication_date: 'DATE',
     ids: 'STRUCT<openalex: VARCHAR, doi: VARCHAR>',
     language: 'VARCHAR',
-    primary_location: 'STRUCT<is_oa: BOOLEAN, landing_page_url: VARCHAR, pdf_url: VARCHAR, license: VARCHAR, version: VARCHAR, is_accepted: BOOLEAN, is_published: BOOLEAN>',
+    primary_location: 'STRUCT<is_oa: BOOLEAN, landing_page_url: VARCHAR, pdf_url: VARCHAR, source: STRUCT<id: VARCHAR, display_name: VARCHAR, issn_l: VARCHAR, issn: VARCHAR[], is_oa: BOOLEAN, is_in_doaj: BOOLEAN, host_organization: VARCHAR, host_organization_name: VARCHAR, host_organization_lineage: VARCHAR[], type: VARCHAR>, license: VARCHAR, version: VARCHAR, is_accepted: BOOLEAN, is_published: BOOLEAN>',
     type: 'VARCHAR',
     type_crossref: 'VARCHAR',
     indexed_in: 'VARCHAR[]',
@@ -236,15 +236,14 @@ FROM read_ndjson(
     is_paratext: 'BOOLEAN',
     primary_topic: 'STRUCT<id: VARCHAR, display_name: VARCHAR, score: FLOAT>',
     topics: 'ARRAY<STRUCT<id: VARCHAR, display_name: VARCHAR, score: FLOAT>>',
-    keywords: 'ARRAY<VARCHAR>',  -- Adjusted to simply store an array of keyword strings for simplicity
+    keywords: 'ARRAY<VARCHAR>',  
     concepts: 'ARRAY<STRUCT<id: VARCHAR, wikidata: VARCHAR, display_name: VARCHAR, level: INT, score: FLOAT>>',
-    mesh: 'ARRAY<VARCHAR>',  -- Assuming potential MESH terms as an array of strings for simplicity
+    mesh: 'ARRAY<VARCHAR>',  
     locations_count: 'BIGINT',
-    locations: 'ARRAY<STRUCT<is_oa: BOOLEAN, landing_page_url: VARCHAR, pdf_url: VARCHAR, license: VARCHAR, version: VARCHAR, is_accepted: BOOLEAN, is_published: BOOLEAN>>',
-    best_oa_location: 'STRUCT<is_oa: BOOLEAN, landing_page_url: VARCHAR, pdf_url: VARCHAR, license: VARCHAR, version: VARCHAR, is_accepted: BOOLEAN, is_published: BOOLEAN>',
+    locations: 'ARRAY<STRUCT<is_oa: BOOLEAN, landing_page_url: VARCHAR, pdf_url: VARCHAR, source: STRUCT<id: VARCHAR, display_name: VARCHAR, issn_l: VARCHAR, issn: VARCHAR[], is_oa: BOOLEAN, is_in_doaj: BOOLEAN, host_organization: VARCHAR, host_organization_name: VARCHAR, host_organization_lineage: VARCHAR[], type: VARCHAR>, license: VARCHAR, version: VARCHAR, is_accepted: BOOLEAN, is_published: BOOLEAN>>',
+    best_oa_location: 'STRUCT<is_oa: BOOLEAN, landing_page_url: VARCHAR, pdf_url: VARCHAR, source: STRUCT<id: VARCHAR, display_name: VARCHAR, issn_l: VARCHAR, issn: VARCHAR[], is_oa: BOOLEAN, is_in_doaj: BOOLEAN, host_organization: VARCHAR, host_organization_name: VARCHAR, host_organization_lineage: VARCHAR[], type: VARCHAR>, license: VARCHAR, version: VARCHAR, is_accepted: BOOLEAN, is_published: BOOLEAN>',
     sustainable_development_goals: 'ARRAY<STRUCT<score: FLOAT, display_name: VARCHAR, id: VARCHAR>>',
-    grants: 'ARRAY<VARCHAR>',
-    datasets: 'ARRAY<VARCHAR>',
+    grants: 'ARRAY<STRUCT<funder: VARCHAR, funder_display_name: VARCHAR, award_id: VARCHAR>>',
     versions: 'ARRAY<VARCHAR>',
     referenced_works_count: 'BIGINT',
     referenced_works: 'ARRAY<VARCHAR>',
@@ -258,6 +257,7 @@ FROM read_ndjson(
   },
   compression='gzip'
 );
+
 
 ````
 https://www.christophenicault.com/post/large_dataframe_arrow_duckdb/
