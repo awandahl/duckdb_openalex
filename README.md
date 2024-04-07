@@ -201,63 +201,84 @@ ORDER BY grants_count DESC
 LIMIT 100;
 ````
 
+### Works.... testing a bit
+
+````
+CREATE TABLE works AS
+  SELECT *
+  FROM read_ndjson(
+    '/home/aw/oal/openalex-snapshot/data/works//*/*.gz',
+    columns = {
+      id: 'VARCHAR',
+      doi: 'VARCHAR',
+      title: 'VARCHAR',
+      display_name: 'VARCHAR',
+      publication_year: 'INT',
+      publication_date: 'DATE',
+      ids: 'STRUCT(openalex VARCHAR, doi VARCHAR)',
+      language: 'VARCHAR'
+      },
+    compression='gzip'
+  );
+````
+
+### Working on the BIG WORKS thing below...
+
 ````
 CREATE TABLE works AS
 SELECT *
 FROM read_ndjson(
-  '/home/aw/oal/openalex-snapshot/data/works/*/*.gz',
-  columns = {
+  '/home/aw/oal/openalex-snapshot/data/works//*/*.gz', columns = {
     id: 'VARCHAR',
     doi: 'VARCHAR',
     title: 'VARCHAR',
     display_name: 'VARCHAR',
     publication_year: 'INT',
     publication_date: 'DATE',
-    ids: 'STRUCT<openalex: VARCHAR, doi: VARCHAR>',
+    ids: 'STRUCT(openalex VARCHAR, doi VARCHAR)',
     language: 'VARCHAR',
-    primary_location: 'STRUCT<is_oa: BOOLEAN, landing_page_url: VARCHAR, pdf_url: VARCHAR, source: STRUCT<id: VARCHAR, display_name: VARCHAR, issn_l: VARCHAR, issn: VARCHAR[], is_oa: BOOLEAN, is_in_doaj: BOOLEAN, host_organization: VARCHAR, host_organization_name: VARCHAR, host_organization_lineage: VARCHAR[], type: VARCHAR>, license: VARCHAR, version: VARCHAR, is_accepted: BOOLEAN, is_published: BOOLEAN>',
+    primary_location: 'STRUCT(is_oa BOOLEAN, landing_page_url VARCHAR, pdf_url VARCHAR, license VARCHAR, version VARCHAR, is_accepted BOOLEAN, is_published BOOLEAN, source STRUCT(id VARCHAR, display_name VARCHAR, issn_l VARCHAR, issn ARRAY<VARCHAR>, is_oa BOOLEAN, is_in_doaj BOOLEAN, host_organization VARCHAR, host_organization_name VARCHAR, host_organization_lineage ARRAY<VARCHAR>, type VARCHAR))',
     type: 'VARCHAR',
     type_crossref: 'VARCHAR',
-    indexed_in: 'VARCHAR[]',
-    open_access: 'STRUCT<is_oa: BOOLEAN, oa_status: VARCHAR, oa_url: VARCHAR, any_repository_has_fulltext: BOOLEAN>',
-    authorships: 'ARRAY<STRUCT<author_position: VARCHAR, author: STRUCT<id: VARCHAR, display_name: VARCHAR, orcid: VARCHAR>, institutions: ARRAY<STRUCT<id: VARCHAR, display_name: VARCHAR, ror: VARCHAR, country_code: VARCHAR, type: VARCHAR, lineage: VARCHAR[]>>, countries: VARCHAR[], is_corresponding: BOOLEAN, raw_author_name: VARCHAR, raw_affiliation_string: VARCHAR, raw_affiliation_strings: VARCHAR[]>>',
+    indexed_in: 'ARRAY<VARCHAR>',
+    open_access: 'STRUCT(is_oa BOOLEAN, oa_status VARCHAR, oa_url VARCHAR, any_repository_has_fulltext BOOLEAN)',
+    authorships: 'ARRAY<STRUCT(author_position VARCHAR, author STRUCT(id VARCHAR, display_name VARCHAR, orcid VARCHAR), institutions ARRAY<STRUCT(id VARCHAR, display_name VARCHAR, ror VARCHAR, country_code VARCHAR, type VARCHAR, lineage ARRAY<VARCHAR>)>, countries ARRAY<VARCHAR>, is_corresponding BOOLEAN, raw_author_name VARCHAR, raw_affiliation_string VARCHAR, raw_affiliation_strings ARRAY<VARCHAR>)>',
     countries_distinct_count: 'BIGINT',
     institutions_distinct_count: 'BIGINT',
-    corresponding_author_ids: 'VARCHAR[]',
-    corresponding_institution_ids: 'VARCHAR[]',
-    apc_list: 'STRUCT<value: BIGINT, currency: VARCHAR, value_usd: BIGINT, provenance: VARCHAR>',
-    apc_paid: 'STRUCT<value: BIGINT, currency: VARCHAR, value_usd: BIGINT, provenance: VARCHAR>',
+    corresponding_author_ids: 'ARRAY<VARCHAR>',
+    corresponding_institution_ids: 'ARRAY<VARCHAR>',
+    apc_list: 'STRUCT(value BIGINT, currency VARCHAR, value_usd BIGINT, provenance VARCHAR)',
+    apc_paid: 'STRUCT(value BIGINT, currency VARCHAR, value_usd BIGINT, provenance VARCHAR)',
     has_fulltext: 'BOOLEAN',
     fulltext_origin: 'VARCHAR',
     cited_by_count: 'BIGINT',
-    cited_by_percentile_year: 'STRUCT<min: INT, max: INT>',
-    biblio: 'STRUCT<volume: VARCHAR, issue: VARCHAR, first_page: VARCHAR, last_page: VARCHAR>',
+    cited_by_percentile_year: 'STRUCT(min INT, max INT)',
+    biblio: 'STRUCT(volume VARCHAR, issue VARCHAR, first_page VARCHAR, last_page VARCHAR)',
     is_retracted: 'BOOLEAN',
     is_paratext: 'BOOLEAN',
-    primary_topic: 'STRUCT<id: VARCHAR, display_name: VARCHAR, score: FLOAT>',
-    topics: 'ARRAY<STRUCT<id: VARCHAR, display_name: VARCHAR, score: FLOAT>>',
-    keywords: 'ARRAY<VARCHAR>',  
-    concepts: 'ARRAY<STRUCT<id: VARCHAR, wikidata: VARCHAR, display_name: VARCHAR, level: INT, score: FLOAT>>',
-    mesh: 'ARRAY<VARCHAR>',  
+    primary_topic: 'STRUCT(id VARCHAR, display_name VARCHAR, score FLOAT)',
+    topics: 'ARRAY<STRUCT(id VARCHAR, display_name VARCHAR, score FLOAT)>',
+    keywords: 'ARRAY<VARCHAR>',
+    concepts: 'ARRAY<STRUCT(id VARCHAR, wikidata VARCHAR, display_name VARCHAR, level INT, score FLOAT)>',
+    mesh: 'ARRAY<VARCHAR>',
     locations_count: 'BIGINT',
-    locations: 'ARRAY<STRUCT<is_oa: BOOLEAN, landing_page_url: VARCHAR, pdf_url: VARCHAR, source: STRUCT<id: VARCHAR, display_name: VARCHAR, issn_l: VARCHAR, issn: VARCHAR[], is_oa: BOOLEAN, is_in_doaj: BOOLEAN, host_organization: VARCHAR, host_organization_name: VARCHAR, host_organization_lineage: VARCHAR[], type: VARCHAR>, license: VARCHAR, version: VARCHAR, is_accepted: BOOLEAN, is_published: BOOLEAN>>',
-    best_oa_location: 'STRUCT<is_oa: BOOLEAN, landing_page_url: VARCHAR, pdf_url: VARCHAR, source: STRUCT<id: VARCHAR, display_name: VARCHAR, issn_l: VARCHAR, issn: VARCHAR[], is_oa: BOOLEAN, is_in_doaj: BOOLEAN, host_organization: VARCHAR, host_organization_name: VARCHAR, host_organization_lineage: VARCHAR[], type: VARCHAR>, license: VARCHAR, version: VARCHAR, is_accepted: BOOLEAN, is_published: BOOLEAN>',
-    sustainable_development_goals: 'ARRAY<STRUCT<score: FLOAT, display_name: VARCHAR, id: VARCHAR>>',
-    grants: 'ARRAY<STRUCT<funder: VARCHAR, funder_display_name: VARCHAR, award_id: VARCHAR>>',
+    locations: 'ARRAY<STRUCT(is_oa BOOLEAN, landing_page_url VARCHAR, pdf_url VARCHAR, license VARCHAR, version VARCHAR, is_accepted BOOLEAN, is_published BOOLEAN, source STRUCT(id VARCHAR, display_name VARCHAR, issn_l VARCHAR, issn ARRAY<VARCHAR>, is_oa BOOLEAN, is_in_doaj BOOLEAN, host_organization VARCHAR, host_organization_name VARCHAR, host_organization_lineage ARRAY<VARCHAR>, type VARCHAR))>',
+    best_oa_location: 'STRUCT(is_oa BOOLEAN, landing_page_url VARCHAR, pdf_url VARCHAR, license VARCHAR, version VARCHAR, is_accepted BOOLEAN, is_published BOOLEAN, source STRUCT(id VARCHAR, display_name VARCHAR, issn_l VARCHAR, issn ARRAY<VARCHAR>, is_oa BOOLEAN, is_in_doaj BOOLEAN, host_organization VARCHAR, host_organization_name VARCHAR, host_organization_lineage ARRAY<VARCHAR>, type VARCHAR))',
+    sustainable_development_goals: 'ARRAY<STRUCT(score FLOAT, display_name VARCHAR, id VARCHAR)>',
+    grants: 'ARRAY<STRUCT(funder VARCHAR, funder_display_name VARCHAR, award_id VARCHAR)>',
     versions: 'ARRAY<VARCHAR>',
     referenced_works_count: 'BIGINT',
     referenced_works: 'ARRAY<VARCHAR>',
     related_works: 'ARRAY<VARCHAR>',
     ngrams_url: 'VARCHAR',
-    abstract_inverted_index: 'STRUCT<terms: MAP<VARCHAR, ARRAY<INT>>>',
+    abstract_inverted_index: 'STRUCT(terms MAP<VARCHAR, ARRAY<INT>>)',
     cited_by_api_url: 'VARCHAR',
-    counts_by_year: 'ARRAY<STRUCT<year: INT, works_count: BIGINT, cited_by_count: BIGINT>>',
+    counts_by_year: 'ARRAY<STRUCT(year INT, works_count BIGINT, cited_by_count BIGINT)>',
     updated_date: 'DATE',
     created_date: 'DATE'
   },
   compression='gzip'
 );
-
 
 ````
 https://www.christophenicault.com/post/large_dataframe_arrow_duckdb/
