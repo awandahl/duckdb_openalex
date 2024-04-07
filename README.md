@@ -213,9 +213,9 @@ FROM read_ndjson(
     display_name: 'VARCHAR',
     publication_year: 'INT',
     publication_date: 'DATE',
-    ids: 'STRUCT<openalex: VARCHAR, doi: VARCHAR>',
+    ids: 'STRUCT<openalex: VARCHAR, doi: VARCHAR, mag: VARCHAR>',
     language: 'VARCHAR',
-    primary_location: 'STRUCT<is_oa: BOOLEAN, landing_page_url: VARCHAR, pdf_url: VARCHAR, source: STRUCT<id: VARCHAR, display_name: VARCHAR, issn_l: VARCHAR, issn: VARCHAR, is_oa: BOOLEAN, is_in_doaj: BOOLEAN, host_organization: VARCHAR, host_organization_name: VARCHAR, host_organization_lineage: VARCHAR[], type: VARCHAR>, license: VARCHAR, version: VARCHAR, is_accepted: BOOLEAN, is_published: BOOLEAN>',
+    primary_location: 'STRUCT<is_oa: BOOLEAN, landing_page_url: VARCHAR, pdf_url: VARCHAR, source: STRUCT<id: VARCHAR, display_name: VARCHAR, issn_l: VARCHAR, issn: VARCHAR[], is_oa: BOOLEAN, is_in_doaj: BOOLEAN, host_organization: VARCHAR, host_organization_name: VARCHAR, host_organization_lineage: VARCHAR[], type: VARCHAR>, license: VARCHAR, version: VARCHAR, is_accepted: BOOLEAN, is_published: BOOLEAN>',
     type: 'VARCHAR',
     type_crossref: 'VARCHAR',
     indexed_in: 'VARCHAR[]',
@@ -228,6 +228,7 @@ FROM read_ndjson(
     apc_list: 'STRUCT<value: BIGINT, currency: VARCHAR, value_usd: BIGINT, provenance: VARCHAR>',
     apc_paid: 'STRUCT<value: BIGINT, currency: VARCHAR, value_usd: BIGINT, provenance: VARCHAR>',
     has_fulltext: 'BOOLEAN',
+    fulltext_origin: 'VARCHAR',
     cited_by_count: 'BIGINT',
     cited_by_percentile_year: 'STRUCT<min: INT, max: INT>',
     biblio: 'STRUCT<volume: VARCHAR, issue: VARCHAR, first_page: VARCHAR, last_page: VARCHAR>',
@@ -235,29 +236,29 @@ FROM read_ndjson(
     is_paratext: 'BOOLEAN',
     primary_topic: 'STRUCT<id: VARCHAR, display_name: VARCHAR, score: FLOAT>',
     topics: 'ARRAY<STRUCT<id: VARCHAR, display_name: VARCHAR, score: FLOAT>>',
-    keywords: 'VARCHAR[]',
+    keywords: 'ARRAY<VARCHAR>',  -- Adjusted for simplicity
     concepts: 'ARRAY<STRUCT<id: VARCHAR, wikidata: VARCHAR, display_name: VARCHAR, level: INT, score: FLOAT>>',
-    mesh: 'VARCHAR[]',
+    mesh: 'ARRAY<VARCHAR>',  -- Assuming potential MESH terms as an array of strings for simplicity
     locations_count: 'BIGINT',
-    locations: 'ARRAY<STRUCT<is_oa: BOOLEAN, landing_page_url: VARCHAR, pdf_url: VARCHAR, source: STRUCT<id: VARCHAR, display_name: VARCHAR, issn_l: VARCHAR, issn: VARCHAR, is_oa: BOOLEAN, is_in_doaj: BOOLEAN, host_organization: VARCHAR, host_organization_name: VARCHAR, host_organization_lineage: VARCHAR[], type: VARCHAR>, license: VARCHAR, version: VARCHAR, is_accepted: BOOLEAN, is_published: BOOLEAN>>',
-    best_oa_location: 'VARCHAR',
+    locations: 'ARRAY<STRUCT<is_oa: BOOLEAN, landing_page_url: VARCHAR, pdf_url: VARCHAR, source: STRUCT<id: VARCHAR, display_name: VARCHAR, issn_l: VARCHAR, issn: VARCHAR[], is_oa: BOOLEAN, is_in_doaj: BOOLEAN, host_organization: VARCHAR, host_organization_name: VARCHAR, host_organization_lineage: VARCHAR[], type: VARCHAR>, license: VARCHAR, version: VARCHAR, is_accepted: BOOLEAN, is_published: BOOLEAN>>',
+    best_oa_location: 'STRUCT<is_oa: BOOLEAN, landing_page_url: VARCHAR, pdf_url: VARCHAR, source: STRUCT<id: VARCHAR, display_name: VARCHAR, issn_l: VARCHAR, issn: VARCHAR[], is_oa: BOOLEAN, is_in_doaj: BOOLEAN, host_organization: VARCHAR, host_organization_name: VARCHAR, host_organization_lineage: VARCHAR[], type: VARCHAR>, license: VARCHAR, version: VARCHAR, is_accepted: BOOLEAN, is_published: BOOLEAN>',
     sustainable_development_goals: 'ARRAY<STRUCT<score: FLOAT, display_name: VARCHAR, id: VARCHAR>>',
     grants: 'ARRAY<VARCHAR>',
     datasets: 'ARRAY<VARCHAR>',
     versions: 'ARRAY<VARCHAR>',
     referenced_works_count: 'BIGINT',
-    referenced_works: 'VARCHAR[]',
-    related_works: 'VARCHAR[]',
+    referenced_works: 'ARRAY<VARCHAR>',
+    related_works: 'ARRAY<VARCHAR>',
     ngrams_url: 'VARCHAR',
     abstract_inverted_index: 'STRUCT<terms: MAP<VARCHAR, ARRAY<INT>>>',
     cited_by_api_url: 'VARCHAR',
-    counts_by_year: 'ARRAY<STRUCT<year: INT, works_count: BIGINT, oa_works_count: BIGINT, cited_by_count: BIGINT>>',
+    counts_by_year: 'ARRAY<STRUCT<year: INT, works_count: BIGINT, cited_by_count: BIGINT>>',
     updated_date: 'DATE',
-    created_date: 'DATE',
-    updated: 'VARCHAR'
+    created_date: 'DATE'
   },
   compression='gzip'
 );
+
 
 ````
 
