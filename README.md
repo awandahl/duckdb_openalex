@@ -210,7 +210,7 @@ CREATE TABLE works AS
       '/home/aw/oal/openalex-snapshot/data/works/updated_date=2024-03-27/part_028.gz');
 ````
 ````
-describe works;
+DESCRIBE works;
 ````
 ````
 
