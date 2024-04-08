@@ -205,6 +205,69 @@ LIMIT 100;
 
 ````
 CREATE TABLE works AS
+    SELECT *
+    FROM read_ndjson(
+      '/home/aw/oal/openalex-snapshot/data/works/updated_date=2024-03-27/part_028.gz');
+````
+````
+describe works;
+````
+````
+
+┌──────────────────────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┬─────────┬─────────┬─────────┬─────────┐
+│     column_name      │                                                                                column_type                                                                                 │  null   │   key   │ default │  extra  │
+│       varchar        │                                                                                  varchar                                                                                   │ varchar │ varchar │ varchar │ varchar │
+├──────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼─────────┼─────────┼─────────┼─────────┤
+│ id                   │ VARCHAR                                                                                                                                                                    │ YES     │         │         │         │
+│ doi                  │ VARCHAR                                                                                                                                                                    │ YES     │         │         │         │
+│ doi_registration_a…  │ VARCHAR                                                                                                                                                                    │ YES     │         │         │         │
+│ display_name         │ VARCHAR                                                                                                                                                                    │ YES     │         │         │         │
+│ title                │ VARCHAR                                                                                                                                                                    │ YES     │         │         │         │
+│ publication_year     │ BIGINT                                                                                                                                                                     │ YES     │         │         │         │
+│ publication_date     │ DATE                                                                                                                                                                       │ YES     │         │         │         │
+│ language             │ VARCHAR                                                                                                                                                                    │ YES     │         │         │         │
+│ language_id          │ VARCHAR                                                                                                                                                                    │ YES     │         │         │         │
+│ ids                  │ STRUCT(openalex VARCHAR, doi VARCHAR, pmid VARCHAR, mag BIGINT, arxiv_id VARCHAR, pmcid VARCHAR)                                                                           │ YES     │         │         │         │
+│ primary_location     │ STRUCT(source STRUCT(id VARCHAR, issn_l VARCHAR, issn VARCHAR[], display_name VARCHAR, publisher VARCHAR, host_organization VARCHAR, host_organization_name VARCHAR, hos…  │ YES     │         │         │         │
+│ best_oa_location     │ STRUCT(source STRUCT(id VARCHAR, issn_l VARCHAR, issn VARCHAR[], display_name VARCHAR, publisher VARCHAR, host_organization VARCHAR, host_organization_name VARCHAR, hos…  │ YES     │         │         │         │
+│ type                 │ VARCHAR                                                                                                                                                                    │ YES     │         │         │         │
+│ type_crossref        │ VARCHAR                                                                                                                                                                    │ YES     │         │         │         │
+│ type_id              │ VARCHAR                                                                                                                                                                    │ YES     │         │         │         │
+│ indexed_in           │ VARCHAR[]                                                                                                                                                                  │ YES     │         │         │         │
+│ open_access          │ STRUCT(is_oa BOOLEAN, oa_status VARCHAR, oa_url VARCHAR, any_repository_has_fulltext BOOLEAN)                                                                              │ YES     │         │         │         │
+│ authorships          │ STRUCT(author_position VARCHAR, author STRUCT(id VARCHAR, display_name VARCHAR, orcid VARCHAR), institutions STRUCT(id VARCHAR, display_name VARCHAR, ror VARCHAR, count…  │ YES     │         │         │         │
+│ countries_distinct…  │ BIGINT                                                                                                                                                                     │ YES     │         │         │         │
+│ institutions_disti…  │ BIGINT                                                                                                                                                                     │ YES     │         │         │         │
+│          ·           │   ·                                                                                                                                                                        │  ·      │    ·    │    ·    │    ·    │
+│          ·           │   ·                                                                                                                                                                        │  ·      │    ·    │    ·    │    ·    │
+│          ·           │   ·                                                                                                                                                                        │  ·      │    ·    │    ·    │    ·    │
+│ referenced_works_c…  │ BIGINT                                                                                                                                                                     │ YES     │         │         │         │
+│ sustainable_develo…  │ STRUCT(id VARCHAR, display_name VARCHAR, score DOUBLE)[]                                                                                                                   │ YES     │         │         │         │
+│ keywords             │ STRUCT(keyword VARCHAR, score DOUBLE)[]                                                                                                                                    │ YES     │         │         │         │
+│ grants               │ STRUCT(funder VARCHAR, funder_display_name VARCHAR, award_id VARCHAR)[]                                                                                                    │ YES     │         │         │         │
+│ apc_list             │ STRUCT("value" BIGINT, currency VARCHAR, value_usd BIGINT, provenance VARCHAR)                                                                                             │ YES     │         │         │         │
+│ apc_paid             │ STRUCT("value" BIGINT, currency VARCHAR, value_usd BIGINT, provenance VARCHAR)                                                                                             │ YES     │         │         │         │
+│ cited_by_percentil…  │ STRUCT(min BIGINT, max BIGINT)                                                                                                                                             │ YES     │         │         │         │
+│ related_works        │ VARCHAR[]                                                                                                                                                                  │ YES     │         │         │         │
+│ abstract_inverted_…  │ JSON                                                                                                                                                                       │ YES     │         │         │         │
+│ counts_by_year       │ JSON[]                                                                                                                                                                     │ YES     │         │         │         │
+│ cited_by_api_url     │ VARCHAR                                                                                                                                                                    │ YES     │         │         │         │
+│ updated_date         │ DATE                                                                                                                                                                       │ YES     │         │         │         │
+│ created_date         │ DATE                                                                                                                                                                       │ YES     │         │         │         │
+│ updated              │ VARCHAR                                                                                                                                                                    │ YES     │         │         │         │
+│ authors_count        │ BIGINT                                                                                                                                                                     │ YES     │         │         │         │
+│ concepts_count       │ BIGINT                                                                                                                                                                     │ YES     │         │         │         │
+│ topics_count         │ BIGINT                                                                                                                                                                     │ YES     │         │         │         │
+│ has_fulltext         │ BOOLEAN                                                                                                                                                                    │ YES     │         │         │         │
+│ fulltext_origin      │ VARCHAR                                                                                                                                                                    │ YES     │         │         │         │
+│ authorships_trunca…  │ BOOLEAN                                                                                                                                                                    │ YES     │         │         │         │
+├──────────────────────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┴─────────┴─────────┴─────────┴─────────┤
+│ 54 rows (40 shown)                                                                                                                                                                                                              6 columns │
+└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+````
+
+````
+CREATE TABLE works AS
   SELECT *
   FROM read_ndjson(
     '/home/aw/oal/openalex-snapshot/data/works//*/*.gz',
