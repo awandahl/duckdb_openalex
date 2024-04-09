@@ -77,7 +77,7 @@ FROM read_ndjson(
   compression='gzip'
 );
 ````
-Or rather only this, since the schema is identified rather well automagically:
+### Or rather only this, since the schema is identified rather well automagically:
 
 ````
 CREATE TABLE authors AS
