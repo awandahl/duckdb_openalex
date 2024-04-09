@@ -77,6 +77,15 @@ FROM read_ndjson(
   compression='gzip'
 );
 ````
+Or rather only this, since the schema is identified rather well automagically:
+
+````
+CREATE TABLE authors AS
+SELECT *
+FROM read_ndjson(
+'/home/aw/oal/openalex-snapshot/data/authors/*/*.gz', compression='gzip');
+
+````
 
 ### A test search, find 100 authors affiliated to KTH and create an additional column 'orcid_modified' for ORCiD where the number isn't prepended by 'https://orcid.org/'
 
