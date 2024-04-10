@@ -86,19 +86,50 @@ FROM read_ndjson(
 '/home/aw/oal/openalex-snapshot/data/authors/*/*.gz', compression='gzip');
 
 ````
+### Describe authors;   
+will give this schema where last_known_instituion is JSON
+````
 
+┌──────────────────────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┬─────────┬─────────┬─────────┬─────────┐
+│     column_name      │                                                                                column_type                                                                                 │  null   │   key   │ default │  extra  │
+│       varchar        │                                                                                  varchar                                                                                   │ varchar │ varchar │ varchar │ varchar │
+├──────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼─────────┼─────────┼─────────┼─────────┤
+│ id                   │ VARCHAR                                                                                                                                                                    │ YES     │         │         │         │
+│ orcid                │ VARCHAR                                                                                                                                                                    │ YES     │         │         │         │
+│ display_name         │ VARCHAR                                                                                                                                                                    │ YES     │         │         │         │
+│ display_name_alter…  │ VARCHAR[]                                                                                                                                                                  │ YES     │         │         │         │
+│ works_count          │ BIGINT                                                                                                                                                                     │ YES     │         │         │         │
+│ cited_by_count       │ BIGINT                                                                                                                                                                     │ YES     │         │         │         │
+│ most_cited_work      │ VARCHAR                                                                                                                                                                    │ YES     │         │         │         │
+│ summary_stats        │ STRUCT("2yr_mean_citedness" DOUBLE, h_index BIGINT, i10_index BIGINT, oa_percent DOUBLE, works_count BIGINT, cited_by_count BIGINT, "2yr_works_count" BIGINT, "2yr_cited…  │ YES     │         │         │         │
+│ ids                  │ STRUCT(openalex VARCHAR, orcid VARCHAR, scopus VARCHAR)                                                                                                                    │ YES     │         │         │         │
+│ last_known_institu…  │ JSON                                                                                                                                                                       │ YES     │         │         │         │
+│ counts_by_year       │ STRUCT("year" BIGINT, works_count BIGINT, oa_works_count BIGINT, cited_by_count BIGINT)[]                                                                                  │ YES     │         │         │         │
+│ x_concepts           │ STRUCT(id VARCHAR, wikidata VARCHAR, display_name VARCHAR, "level" BIGINT, score DOUBLE)[]                                                                                 │ YES     │         │         │         │
+│ works_api_url        │ VARCHAR                                                                                                                                                                    │ YES     │         │         │         │
+│ updated_date         │ DATE                                                                                                                                                                       │ YES     │         │         │         │
+│ created_date         │ DATE                                                                                                                                                                       │ YES     │         │         │         │
+│ updated              │ VARCHAR                                                                                                                                                                    │ YES     │         │         │         │
+├──────────────────────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┴─────────┴─────────┴─────────┴─────────┤
+│ 16 rows                                                                                                                                                                                                                         6 columns │
+└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+````
 ### A test search, find 100 authors affiliated to KTH and create an additional column 'orcid_modified' for ORCiD where the number isn't prepended by 'https://orcid.org/'
 
 ````
+SELECT *, REPLACE(orcid, 'https://orcid.org/', '') AS orcid_modified
+FROM authors
+WHERE last_known_institution::JSON->>'id' = 'https://openalex.org/I86987016'
+ORDER BY works_count DESC
+LIMIT 100;
+
 SELECT id, last_known_institution::JSON->>'id' AS institution_id
 FROM authors
 WHERE last_known_institution::JSON->>'country_code' = 'SE'
 LIMIT 100;
 
-SELECT *, REPLACE(orcid, 'https://orcid.org/', '') AS orcid_modified
-FROM authors
-WHERE last_known_institution::JSON->>'id' = 'https://openalex.org/I86987016'
-LIMIT 100;
+
 
 ````
 
