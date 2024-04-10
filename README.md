@@ -90,10 +90,16 @@ FROM read_ndjson(
 ### A test search, find 100 authors affiliated to KTH and create an additional column 'orcid_modified' for ORCiD where the number isn't prepended by 'https://orcid.org/'
 
 ````
+SELECT id, last_known_institution::JSON->>'id' AS institution_id
+FROM authors
+WHERE last_known_institution::JSON->>'country_code' = 'SE'
+LIMIT 100;
+
 SELECT *, REPLACE(orcid, 'https://orcid.org/', '') AS orcid_modified
 FROM authors
-WHERE last_known_institution.id = 'https://openalex.org/I86987016'
+WHERE last_known_institution::JSON->>'id' = 'https://openalex.org/I86987016'
 LIMIT 100;
+
 ````
 
 ### Write a parquet file for the same search
