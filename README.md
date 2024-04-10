@@ -118,7 +118,7 @@ will give this schema where last_known_instituion is JSON
 ### A test search, find 100 authors affiliated to KTH and create an additional column 'orcid_modified' for ORCiD where the number isn't prepended by 'https://orcid.org/'
 
 ````
-SELECT *, REPLACE(orcid, 'https://orcid.org/', '') AS orcid_modified
+SELECT display_name, display_name_alternatives, works_count, REPLACE(orcid, 'https://orcid.org/', '') AS orcid_modified
 FROM authors
 WHERE last_known_institution::JSON->>'id' = 'https://openalex.org/I86987016'
 ORDER BY works_count DESC
