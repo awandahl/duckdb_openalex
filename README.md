@@ -51,33 +51,8 @@ from read_ndjson(
 └──────────────┘
 ````
 
-### Create a table for the authors
 
-````
-
-CREATE TABLE authors AS
-SELECT *
-FROM read_ndjson(
-'/home/aw/oal/openalex-snapshot/data/authors/*/*.gz', columns = {
-    id: 'VARCHAR',
-    orcid: 'VARCHAR',
-    display_name: 'VARCHAR',
-    display_name_alternatives: 'VARCHAR[]',
-    works_count: 'BIGINT',
-    cited_by_count: 'BIGINT',
-    most_cited_work: 'VARCHAR',
-    ids: 'STRUCT(openalex VARCHAR, orcid VARCHAR, scopus VARCHAR)',
-    last_known_institution: 'STRUCT(id VARCHAR, ror VARCHAR, display_name VARCHAR, country_code VARCHAR, type VARCHAR, lineage VARCHAR[])',
-    counts_by_year: 'STRUCT(year VARCHAR, works_count BIGINT, oa_works_count BIGINT, cited_by_count BIGINT)[]',
-    works_api_url: 'VARCHAR',
-    updated_date: 'DATE',
-    created_date: 'DATE',
-    updated: 'VARCHAR'
-  },
-  compression='gzip'
-);
-````
-### Or rather only this, since the schema is identified rather well automagically:
+### The schema for authors is identified rather well automagically:
 
 ````
 CREATE TABLE authors AS
@@ -87,7 +62,7 @@ FROM read_ndjson(
 
 ````
 ### Describe authors;   
-will give this schema where last_known_instituion is JSON
+will give this schema where last_known_institution is JSON
 ````
 
 ┌──────────────────────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┬─────────┬─────────┬─────────┬─────────┐
@@ -115,7 +90,7 @@ will give this schema where last_known_instituion is JSON
 └───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 
 ````
-### A test search, find 100 authors affiliated to KTH and create an additional column 'orcid_modified' for ORCiD where the number isn't prepended by 'https://orcid.org/'
+### A test search, find display_name, display_name_alternatives for 100 authors affiliated to KTH and additionally create and display an additional column 'orcid_modified' for the clean ORCiD (where the number isn't prepended by 'https://orcid.org/')
 
 ````
 SELECT display_name, display_name_alternatives, works_count, REPLACE(orcid, 'https://orcid.org/', '') AS orcid_modified
@@ -123,14 +98,14 @@ FROM authors
 WHERE last_known_institution::JSON->>'id' = 'https://openalex.org/I86987016'
 ORDER BY works_count DESC
 LIMIT 100;
-
-SELECT id, last_known_institution::JSON->>'id' AS institution_id
+````
+### A second test search... researchers in Sweden with the most publications
+````
+SELECT display_name, last_known_institution::JSON->>'display_name' AS institution_display_name, works_count
 FROM authors
 WHERE last_known_institution::JSON->>'country_code' = 'SE'
-LIMIT 100;
-
-
-
+ORDER BY works_count DESC
+LIMIT 200;
 ````
 
 ### Write a parquet file for the first test search above
@@ -138,10 +113,11 @@ LIMIT 100;
 ````
 
 COPY (
-    SELECT *, REPLACE(orcid, 'https://orcid.org/', '') AS orcid_modified
-    FROM authors
-    WHERE last_known_institution::JSON->>'id' = 'https://openalex.org/I86987016'
-    LIMIT 100
+SELECT display_name, display_name_alternatives, works_count, REPLACE(orcid, 'https://orcid.org/', '') AS orcid_modified
+FROM authors
+WHERE last_known_institution::JSON->>'id' = 'https://openalex.org/I86987016'
+ORDER BY works_count DESC
+LIMIT 100
 ) TO '/home/aw/oal/kth_authors_oal_2024-04-10.parquet' (FORMAT 'parquet');
 
 ````
