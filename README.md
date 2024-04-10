@@ -61,8 +61,11 @@ FROM read_ndjson(
 '/home/aw/oal/openalex-snapshot/data/authors/*/*.gz', compression='gzip');
 
 ````
-### Describe authors;   
-will give this schema where last_known_institution is JSON
+### Schema for authors
+````
+describe authors:
+````
+will give this schema, where last_known_institution is JSON
 ````
 
 ┌──────────────────────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┬─────────┬─────────┬─────────┬─────────┐
