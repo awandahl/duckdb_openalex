@@ -51,7 +51,6 @@ from read_ndjson(
 └──────────────┘
 ````
 
-
 ### The schema for authors is identified rather well automagically:
 
 ````
@@ -59,7 +58,6 @@ CREATE TABLE authors AS
 SELECT *
 FROM read_ndjson(
 '/home/aw/oal/openalex-snapshot/data/authors/*/*.gz', compression='gzip');
-
 ````
 ### Schema for authors
 ````
@@ -67,7 +65,6 @@ describe authors:
 ````
 will give this schema, where last_known_institution is JSON
 ````
-
 ┌──────────────────────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┬─────────┬─────────┬─────────┬─────────┐
 │     column_name      │                                                                                column_type                                                                                 │  null   │   key   │ default │  extra  │
 │       varchar        │                                                                                  varchar                                                                                   │ varchar │ varchar │ varchar │ varchar │
@@ -91,7 +88,6 @@ will give this schema, where last_known_institution is JSON
 ├──────────────────────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┴─────────┴─────────┴─────────┴─────────┤
 │ 16 rows                                                                                                                                                                                                                         6 columns │
 └───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
-
 ````
 ### A test search, find display_name, display_name_alternatives for 100 authors affiliated to KTH and additionally create and display an additional column 'orcid_modified' for the clean ORCiD (where the number isn't prepended by 'https://orcid.org/')
 
@@ -114,7 +110,6 @@ LIMIT 200;
 ### Write a parquet file for the first test search above
 
 ````
-
 COPY (
 SELECT display_name, display_name_alternatives, works_count, REPLACE(orcid, 'https://orcid.org/', '') AS orcid_modified
 FROM authors
@@ -122,7 +117,6 @@ WHERE last_known_institution::JSON->>'id' = 'https://openalex.org/I86987016'
 ORDER BY works_count DESC
 LIMIT 100
 ) TO '/home/aw/oal/kth_authors_oal_2024-04-10.parquet' (FORMAT 'parquet');
-
 ````
 
 ### Checking the size of institutions = 100K+
