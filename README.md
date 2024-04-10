@@ -133,16 +133,16 @@ LIMIT 100;
 
 ````
 
-### Write a parquet file for the same search
+### Write a parquet file for the first test search above
 
 ````
 
 COPY (
     SELECT *, REPLACE(orcid, 'https://orcid.org/', '') AS orcid_modified
     FROM authors
-    WHERE last_known_institution.id = 'https://openalex.org/I86987016'
+    WHERE last_known_institution::JSON->>'id' = 'https://openalex.org/I86987016'
     LIMIT 100
-) TO '/home/aw/oal/kth_authors_oal_2024-04-05.parquet' (FORMAT 'parquet');
+) TO '/home/aw/oal/kth_authors_oal_2024-04-10.parquet' (FORMAT 'parquet');
 
 ````
 
