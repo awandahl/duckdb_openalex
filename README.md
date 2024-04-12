@@ -286,5 +286,22 @@ DESCRIBE works;
 │ 54 rows (40 shown)                                                                                                                                                                                                              6 columns │
 └───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ````
+### Running into problems...
+````
+CREATE TABLE works AS
+SELECT *
+FROM read_ndjson('/media/oal/data/works/*/*.gz');
+````
+...rendered this
+````
+Invalid Input Error: "maximum_object_size" of 16777216 bytes exceeded while reading file "/media/oal/data/works/updated_date=2024-03-25/part_026.gz" (>17944944 bytes).
+ Try increasing "maximum_object_size".
+````
+...so we try do that
+````
+CREATE TABLE works AS
+SELECT *
+FROM read_ndjson('/media/oal/data/works/*/*.gz', maximum_object_size=30000000);
+````
 
 https://www.christophenicault.com/post/large_dataframe_arrow_duckdb/
